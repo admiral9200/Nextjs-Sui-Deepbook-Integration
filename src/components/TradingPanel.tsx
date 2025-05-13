@@ -54,8 +54,14 @@ export default function TradingPanel({ marketId, yesPrice, noPrice }: TradingPan
       // Create a new transaction block
       const txb = new TransactionBlock();
       
-      // In a real app, you would call your smart contract here
-      // This is just a placeholder to demonstrate the structure
+      // Add some example transaction (replace with your actual contract call)
+      txb.moveCall({
+        target: `${marketId}::market::buy_position`,
+        arguments: [
+          txb.pure(position),
+          txb.pure(amount),
+        ],
+      });
       
       await executeTransaction(txb);
       
@@ -111,7 +117,7 @@ export default function TradingPanel({ marketId, yesPrice, noPrice }: TradingPan
       
       <div className="mb-4">
         <p className="text-sm flex justify-between">
-          <span>You'll receive:</span>
+          <span>You&apos;ll receive:</span>
           <span>{shares} Shares</span>
         </p>
         <p className="text-sm flex justify-between">
@@ -136,4 +142,5 @@ export default function TradingPanel({ marketId, yesPrice, noPrice }: TradingPan
     </div>
   );
 }
+
 

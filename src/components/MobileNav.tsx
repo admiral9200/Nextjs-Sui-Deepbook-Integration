@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 export default function MobileNav() {
@@ -40,27 +41,27 @@ export default function MobileNav() {
       {isOpen && (
         <div className="absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 border-b z-50">
           <nav className="flex flex-col p-4">
-            <a
+            <Link
               href="/markets"
               className="py-2 hover:text-blue-600"
               onClick={() => setIsOpen(false)}
             >
               Markets
-            </a>
-            <a
+            </Link>
+            <Link
               href="/portfolio"
               className="py-2 hover:text-blue-600"
               onClick={() => setIsOpen(false)}
             >
               Portfolio
-            </a>
-            <a
+            </Link>
+            <Link
               href="/create-market"
               className="py-2 hover:text-blue-600"
               onClick={() => setIsOpen(false)}
             >
               Create Market
-            </a>
+            </Link>
           </nav>
         </div>
       )}

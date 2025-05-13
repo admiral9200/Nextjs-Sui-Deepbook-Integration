@@ -2,102 +2,97 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+    <div className="container mx-auto p-6">
+      <section className="py-12 md:py-24 text-center">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          Predict the Future on SUI
+        </h1>
+        <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+          Trade on the outcomes of real-world events with the power of SUI blockchain.
+          Create markets, buy and sell shares, and earn rewards for accurate predictions.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/markets"
+            className="px-6 py-3 bg-blue-600 text-white rounded-md font-medium text-lg"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            Explore Markets
           </a>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/create-market"
+            className="px-6 py-3 border border-blue-600 text-blue-600 rounded-md font-medium text-lg"
           >
-            Read our docs
+            Create a Market
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+      </section>
+
+      <section className="py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="text-center p-6">
+          <div className="text-4xl mb-4">🔮</div>
+          <h2 className="text-2xl font-bold mb-3">Predict</h2>
+          <p>Buy shares in outcomes you believe will happen. The more likely an outcome, the higher the price of its shares.</p>
+        </div>
+        <div className="text-center p-6">
+          <div className="text-4xl mb-4">💰</div>
+          <h2 className="text-2xl font-bold mb-3">Profit</h2>
+          <p>If your prediction is correct, you'll earn $1 for each share. Sell your position anytime before the market resolves.</p>
+        </div>
+        <div className="text-center p-6">
+          <div className="text-4xl mb-4">🚀</div>
+          <h2 className="text-2xl font-bold mb-3">Create</h2>
+          <p>Launch your own prediction market on any verifiable future event and earn fees from all trades.</p>
+        </div>
+      </section>
+
+      <section className="py-12">
+        <h2 className="text-3xl font-bold mb-8 text-center">Popular Markets</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <MarketCard 
+            title="Will BTC exceed $100k by end of 2024?"
+            volume="$24,532"
+            yesPrice="0.65"
+            id="btc-100k-2024"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+          <MarketCard 
+            title="Will Ethereum complete the Surge upgrade in 2024?"
+            volume="$12,845"
+            yesPrice="0.42"
+            id="eth-surge-2024"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+          <MarketCard 
+            title="Will SUI reach top 10 by market cap in 2024?"
+            volume="$8,721"
+            yesPrice="0.28"
+            id="sui-top10-2024"
           />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+        <div className="text-center mt-8">
+          <a href="/markets" className="text-blue-600 font-medium hover:underline">
+            View all markets →
+          </a>
+        </div>
+      </section>
     </div>
   );
 }
+
+function MarketCard({ title, volume, yesPrice, id }: { 
+  title: string; 
+  volume: string; 
+  yesPrice: string;
+  id: string;
+}) {
+  return (
+    <a href={`/markets/${id}`} className="block">
+      <div className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+        <h2 className="font-semibold text-lg mb-2">{title}</h2>
+        <div className="flex justify-between text-sm">
+          <span>Volume: {volume}</span>
+          <span className="font-medium">YES: ${yesPrice}</span>
+        </div>
+      </div>
+    </a>
+  );
+}
+

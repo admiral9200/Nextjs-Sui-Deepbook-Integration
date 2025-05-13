@@ -52,7 +52,7 @@ export default function RootLayout({
         </main>
         <footer className="border-t mt-12">
           <div className="container mx-auto p-6 text-center text-sm text-gray-500">
-            <p>© 2024 SUI Prediction Markets. This is a demo application.</p>
+            <p>© 2025 SUI Prediction Markets. This is a demo application.</p>
           </div>
         </footer>
       </body>

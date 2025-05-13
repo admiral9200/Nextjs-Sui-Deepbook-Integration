@@ -49,22 +49,22 @@ export default function Home() {
         <h2 className="text-3xl font-bold mb-8 text-center">Popular Markets</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <MarketCard 
-            title="Will BTC exceed $100k by end of 2024?"
+            title="Will BTC exceed $100k by end of 2025?"
             volume="$24,532"
             yesPrice="0.65"
-            id="btc-100k-2024"
+            id="btc-100k-2025"
           />
           <MarketCard 
-            title="Will Ethereum complete the Surge upgrade in 2024?"
+            title="Will Ethereum complete the Surge upgrade in 2025?"
             volume="$12,845"
             yesPrice="0.42"
-            id="eth-surge-2024"
+            id="eth-surge-2025"
           />
           <MarketCard 
-            title="Will SUI reach top 10 by market cap in 2024?"
+            title="Will SUI reach top 10 by market cap in 2025?"
             volume="$8,721"
             yesPrice="0.28"
-            id="sui-top10-2024"
+            id="sui-top10-2025"
           />
         </div>
         <div className="text-center mt-8">

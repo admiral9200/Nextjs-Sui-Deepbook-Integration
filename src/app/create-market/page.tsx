@@ -39,7 +39,7 @@ export default function CreateMarketPage() {
             value={formData.question}
             onChange={handleChange}
             className="w-full p-2 border rounded"
-            placeholder="Will BTC exceed $100k by end of 2024?"
+            placeholder="Will BTC exceed $100k by end of 2025?"
             required
           />
         </div>

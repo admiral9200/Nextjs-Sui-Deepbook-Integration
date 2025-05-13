@@ -47,12 +47,12 @@ export default async function MarketDetailPage({
 
 function getMarketData(marketId: string) {
   return {
-    title: "Will BTC exceed $100k by end of 2024?",
+    title: "Will BTC exceed $100k by end of 2025?",
     description:
-      "This market resolves to YES if the price of Bitcoin exceeds $100,000 USD at any point before December 31, 2024, 11:59 PM UTC according to CoinGecko.",
+      "This market resolves to YES if the price of Bitcoin exceeds $100,000 USD at any point before December 31, 2025, 11:59 PM UTC according to CoinGecko.",
     volume: "$24,532",
     liquidity: "$15,750",
-    endDate: "Dec 31, 2024",
+    endDate: "Dec 31, 2025",
     yesPrice: "0.65",
     noPrice: "0.35",
   };

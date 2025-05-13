@@ -44,8 +44,8 @@ export default function PortfolioPage() {
             </thead>
             <tbody>
               <PositionRow
-                market="Will BTC exceed $100k by end of 2024?"
-                marketId="btc-100k-2024"
+                market="Will BTC exceed $100k by end of 2025?"
+                marketId="btc-100k-2025"
                 position="YES"
                 quantity="100"
                 avgPrice="0.58"
@@ -54,8 +54,8 @@ export default function PortfolioPage() {
                 pnlPositive={true}
               />
               <PositionRow
-                market="Will Ethereum complete the Surge upgrade in 2024?"
-                marketId="eth-surge-2024"
+                market="Will Ethereum complete the Surge upgrade in 2025?"
+                marketId="eth-surge-2025"
                 position="NO"
                 quantity="50"
                 avgPrice="0.62"
@@ -64,8 +64,8 @@ export default function PortfolioPage() {
                 pnlPositive={true}
               />
               <PositionRow
-                market="Will SUI reach top 10 by market cap in 2024?"
-                marketId="sui-top10-2024"
+                market="Will SUI reach top 10 by market cap in 2025?"
+                marketId="sui-top10-2025"
                 position="YES"
                 quantity="200"
                 avgPrice="0.32"

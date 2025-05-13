@@ -61,7 +61,7 @@ export default function PortfolioPage() {
             <h2 className="text-xl font-semibold mb-4">Your Positions</h2>
             <div className="border rounded-lg p-4">
               <div className="text-center py-8">
-                <p className="text-gray-500">You don't have any open positions yet</p>
+                <p className="text-gray-500">You don&apos;t have any open positions yet</p>
               </div>
             </div>
           </div>

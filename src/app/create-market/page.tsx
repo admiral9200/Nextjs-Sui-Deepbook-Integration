@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { useSuiWallet } from "@/hooks/useSuiWallet";
 import { TransactionBlock } from "@mysten/sui.js/transactions";
-import { useRouter } from "next/navigation";
+import { CONTRACT_CONFIG } from "@/utils/contractConfig";
 
 export default function CreateMarketPage() {
-  const router = useRouter();
   const { connected, executeTransaction } = useSuiWallet();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -28,29 +27,40 @@ export default function CreateMarketPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!connected) {
       alert("Please connect your wallet first");
       return;
     }
-    
+
     try {
       setIsLoading(true);
-      
-      // Create a new transaction block
+
       const txb = new TransactionBlock();
-      
-      // Convert date to timestamp (milliseconds since epoch)
+
       const endTimestamp = new Date(formData.endDate).getTime();
-      
+
       const liquidityAmount = Math.floor(parseFloat(formData.initialLiquidity) * 1_000_000_000);
+
+      if (liquidityAmount > 1_000_000_000_000) {
+        throw new Error("Initial liquidity amount is too high");
+      }
 
       const coin = txb.splitCoins(txb.gas, [txb.pure(liquidityAmount)]);
 
-      console.log("form data: ", formData, " endTimeStamp: ", endTimestamp);
-      
+      console.log("Transaction parameters:", {
+        packageId: CONTRACT_CONFIG.PACKAGE_ID,
+        module: CONTRACT_CONFIG.MARKET_MODULE,
+        function: CONTRACT_CONFIG.MARKET_CREATE_FUNCTION,
+        question: formData.question,
+        description: formData.description,
+        category: formData.category,
+        endTimestamp,
+        liquidityAmount,
+      });
+
       txb.moveCall({
-        target: "0xda180c71c987d841977c74544619889b7e751a40d9235278f7dfcfd575f331b0::sui_market::create_market_with_pool",
+        target: `${CONTRACT_CONFIG.PACKAGE_ID}::${CONTRACT_CONFIG.MARKET_MODULE}::${CONTRACT_CONFIG.MARKET_CREATE_FUNCTION}`,
         arguments: [
           txb.pure(formData.question),
           txb.pure(formData.description),
@@ -59,23 +69,23 @@ export default function CreateMarketPage() {
           coin,
           txb.object("0x6")
         ],
-        // If your function needs coins, add them here
-        typeArguments: ["0x2::sui::SUI"],
       });
-      
-      // Set an explicit gas budget to avoid the dry run error
-      txb.setGasBudget(30000000); // Set a reasonable gas budget (30M gas units)
-      
-      // Execute the transaction
+
+      txb.setGasBudget(50000000);
+
       const result = await executeTransaction(txb);
-      console.log("Market creation result:", result);
-      
-      // Navigate to markets page after successful creation
-      alert("Market created successfully!");
-      router.push("/markets");
-      
+      console.log("Full transaction result:", result);
+
     } catch (error) {
       console.error("Market creation failed:", error);
+      // More detailed error logging
+      if (error instanceof Error) {
+        console.error("Error details:", {
+          message: error.message,
+          stack: error.stack,
+          name: error.name
+        });
+      }
       alert(`Failed to create market: ${error instanceof Error ? error.message : "Unknown error"}`);
     } finally {
       setIsLoading(false);
@@ -169,7 +179,7 @@ export default function CreateMarketPage() {
         >
           {isLoading ? "Creating Market..." : "Create Market"}
         </button>
-        
+
         {!connected && (
           <p className="text-sm text-center mt-2 text-gray-500">
             Connect your wallet to create a market

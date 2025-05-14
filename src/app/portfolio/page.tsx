@@ -2,15 +2,7 @@
 
 import { useSuiWallet } from '@/hooks/useSuiWallet';
 import { useEffect, useState } from 'react';
-import { useSuiClient } from '@mysten/dapp-kit';
 
-interface Position {
-  marketId: string;
-  marketTitle: string;
-  positionType: 'YES' | 'NO';
-  shares: string;
-  value: string;
-}
 
 export default function PortfolioPage() {
   const { connected, account, formatAddress, getBalance } = useSuiWallet();

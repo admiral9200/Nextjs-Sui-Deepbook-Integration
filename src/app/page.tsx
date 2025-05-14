@@ -97,7 +97,7 @@ export default function Home() {
                 id={market.id}
                 endDate={market.endDate}
                 resolved={market.resolved}
-                outcome={market.outcome}
+                outcome={market.outcome === 'Yes' ? true : false}
               />
             ))}
           </div>

@@ -17,22 +17,23 @@ export default function MarketDetailPage() {
 
   const handleResolveMarket = async (outcome: boolean) => {
     if (!connected || !marketData) return;
-    
+
     try {
       setIsResolving(true);
-      
+
       const txb = new TransactionBlock();
-      
+
       txb.moveCall({
         target: `${CONTRACT_CONFIG.PACKAGE_ID}::${CONTRACT_CONFIG.MARKET_MODULE}::${CONTRACT_CONFIG.MARKET_RESOLVE_FUNCTION}`,
         arguments: [
           txb.object(marketId),
           txb.pure(outcome),
+          txb.object(CONTRACT_CONFIG.TESTNET_CLOCK_ID),
         ],
       });
-      
+
       await executeTransaction(txb);
-      
+
       alert(`Market resolved as ${outcome ? 'YES' : 'NO'}`);
       window.location.reload();
     } catch (error) {
@@ -86,7 +87,7 @@ export default function MarketDetailPage() {
               <p>Price chart placeholder</p>
             </div>
           </div>
-          
+
           {/* Resolution panel for market creator */}
           {isCreator && !marketData.resolved && (
             <div className="border rounded-lg p-4 mt-6">
@@ -112,14 +113,13 @@ export default function MarketDetailPage() {
               </div>
             </div>
           )}
-          
+
           {/* Show resolution for resolved markets */}
           {marketData.resolved && (
             <div className="border rounded-lg p-4 mt-6">
               <h2 className="font-semibold mb-4">Market Resolution</h2>
-              <div className={`text-center p-4 rounded-md ${
-                marketData.outcome ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-              }`}>
+              <div className={`text-center p-4 rounded-md ${marketData.outcome ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`}>
                 <p className="text-lg font-bold">
                   This market has resolved as {marketData.outcome ? 'YES' : 'NO'}
                 </p>

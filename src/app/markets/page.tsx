@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 
 import { useMarkets } from "@/hooks/useMarketData";
 import MarketCard from "@/components/MarketCard";
+import MarketData from "@/types/MarketData";
 
 export default function MarketsPage() {
   const { markets, isLoading, error } = useMarkets();
-  const [filteredMarkets, setFilteredMarkets] = useState([]);
+  const [filteredMarkets, setFilteredMarkets] = useState<MarketData[]>([]);
   const [categoryFilter, setCategoryFilter] = useState("all");
 
   useEffect(() => {
@@ -118,7 +119,7 @@ export default function MarketsPage() {
               id={market.id}
               endDate={market.endDate}
               resolved={market.resolved}
-              outcome={market.outcome}
+              outcome={market.outcome === 'Yes' ? true : false}
             />
           ))}
         </div>

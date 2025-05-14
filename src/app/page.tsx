@@ -1,6 +1,24 @@
+"use client";
+
 import Link from "next/link";
+import { useMarkets } from "@/hooks/useMarketData";
+import MarketCard from "@/components/MarketCard";
 
 export default function Home() {
+  const { markets, isLoading } = useMarkets();
+
+  // Get top 3 markets by volume
+  const topMarkets = markets
+    ? markets
+        .sort((a, b) => {
+          // Extract numeric value from volume string (e.g. "$24,532" -> 24532)
+          const volumeA = parseFloat(a.volume.replace(/[^0-9.]/g, ""));
+          const volumeB = parseFloat(b.volume.replace(/[^0-9.]/g, ""));
+          return volumeB - volumeA;
+        })
+        .slice(0, 3)
+    : [];
+
   return (
     <div className="container mx-auto p-6">
       <section className="py-12 md:py-24 text-center">
@@ -41,8 +59,8 @@ export default function Home() {
           <div className="text-4xl mb-4">💰</div>
           <h2 className="text-2xl font-bold mb-3">Profit</h2>
           <p>
-            If your prediction is correct, you&apos;ll earn $1 for each share. Sell
-            your position anytime before the market resolves.
+            If your prediction is correct, you&apos;ll earn $1 for each share.
+            Sell your position anytime before the market resolves.
           </p>
         </div>
         <div className="text-center p-6">
@@ -57,26 +75,34 @@ export default function Home() {
 
       <section className="py-12">
         <h2 className="text-3xl font-bold mb-8 text-center">Popular Markets</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <MarketCard
-            title="Will BTC exceed $100k by end of 2025?"
-            volume="$24,532"
-            yesPrice="0.65"
-            id="btc-100k-2025"
-          />
-          <MarketCard
-            title="Will Ethereum complete the Surge upgrade in 2025?"
-            volume="$12,845"
-            yesPrice="0.42"
-            id="eth-surge-2025"
-          />
-          <MarketCard
-            title="Will SUI reach top 10 by market cap in 2025?"
-            volume="$8,721"
-            yesPrice="0.28"
-            id="sui-top10-2025"
-          />
-        </div>
+
+        {isLoading ? (
+          <div className="flex justify-center items-center h-32">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        ) : topMarkets.length === 0 ? (
+          <div className="text-center p-6 bg-gray-50 rounded-lg">
+            <p className="text-gray-500">
+              No markets available yet. Be the first to create one!
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {topMarkets.map((market) => (
+              <MarketCard
+                key={market.id}
+                title={market.title}
+                volume={market.volume}
+                yesPrice={market.yesPrice}
+                id={market.id}
+                endDate={market.endDate}
+                resolved={market.resolved}
+                outcome={market.outcome}
+              />
+            ))}
+          </div>
+        )}
+
         <div className="text-center mt-8">
           <Link
             href="/markets"
@@ -89,28 +115,3 @@ export default function Home() {
     </div>
   );
 }
-
-function MarketCard({
-  title,
-  volume,
-  yesPrice,
-  id,
-}: {
-  title: string;
-  volume: string;
-  yesPrice: string;
-  id: string;
-}) {
-  return (
-    <Link href={`/markets/${id}`} className="block">
-      <div className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-        <h2 className="font-semibold text-lg mb-2">{title}</h2>
-        <div className="flex justify-between text-sm">
-          <span>Volume: {volume}</span>
-          <span className="font-medium">YES: ${yesPrice}</span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-

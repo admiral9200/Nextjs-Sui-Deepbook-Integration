@@ -3,6 +3,7 @@
 import { useSuiWallet } from '@/hooks/useSuiWallet';
 import { TransactionBlock } from '@mysten/sui.js/transactions';
 import { useState } from 'react';
+import { CONTRACT_CONFIG } from '@/utils/contractConfig';
 
 type Position = 'YES' | 'NO';
 
@@ -54,13 +55,19 @@ export default function TradingPanel({ marketId, yesPrice, noPrice }: TradingPan
       // Create a new transaction block
       const txb = new TransactionBlock();
       
-      // Add some example transaction (replace with your actual contract call)
+      // Convert amount to the smallest unit (assuming 9 decimals for SUI)
+      const amountInSmallestUnit = Math.floor(parseFloat(amount) * 1_000_000_000);
+      
+      // Add the buy_position transaction
       txb.moveCall({
-        target: `${marketId}::market::buy_position`,
+        target: `${CONTRACT_CONFIG.PACKAGE_ID}::${CONTRACT_CONFIG.MARKET_MODULE}::${CONTRACT_CONFIG.MARKET_BUY_FUNCTION}`,
         arguments: [
-          txb.pure(position),
-          txb.pure(amount),
+          txb.object(marketId), // Market object ID
+          txb.pure(position === 'YES' ? true : false), // Convert YES/NO to boolean
+          txb.pure(amountInSmallestUnit.toString()), // Amount in smallest unit
+          // Add any other required arguments for your contract
         ],
+        typeArguments: [CONTRACT_CONFIG.SUI_TYPE],
       });
       
       await executeTransaction(txb);
@@ -142,5 +149,6 @@ export default function TradingPanel({ marketId, yesPrice, noPrice }: TradingPan
     </div>
   );
 }
+
 
 
